@@ -1,0 +1,79 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://First_Person.gd" type="Script" id=1]
+[ext_resource path="res://crosshair.gd" type="Script" id=2]
+[ext_resource path="res://croshair.png" type="Texture" id=3]
+[ext_resource path="res://IPADD.gd" type="Script" id=4]
+[ext_resource path="res://gun.tscn" type="PackedScene" id=5]
+
+[sub_resource type="Environment" id=1]
+ambient_light_color = Color( 0.0901961, 0.0901961, 0.0901961, 1 )
+glow_levels/7 = true
+glow_intensity = 0.1
+
+[sub_resource type="SphereMesh" id=2]
+
+[sub_resource type="CapsuleShape" id=3]
+
+[sub_resource type="CapsuleMesh" id=4]
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0.0689392, 0.724101, 0.980469, 1 )
+
+[node name="Player" type="KinematicBody"]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, 1, 0, -1, -1.62921e-07, 0, 169.172, -36.7771 )
+script = ExtResource( 1 )
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( -7.85803e-09, 1.62981e-07, 1, 1, -1.62921e-07, 7.85806e-09, 1.62921e-07, 1, -1.62981e-07, -0.2, 0, 1 )
+environment = SubResource( 1 )
+fov = 120.0
+far = 8192.0
+
+[node name="right_arm" type="MeshInstance" parent="Camera"]
+transform = Transform( -0.494257, 0.140431, -0.0279213, -0.0269571, 0.0175024, 0.499196, 0.0705911, 0.989936, -0.00486508, 0.904, -1, -1 )
+mesh = SubResource( 2 )
+material/0 = null
+
+[node name="gun" parent="Camera/right_arm" instance=ExtResource( 5 )]
+transform = Transform( -1.62981e-08, 5.21541e-08, -0.2, -6.69388e-10, 0.2, 2.79397e-08, 0.1, 4.65661e-10, -3.35276e-08, 0.783913, 0.0576601, 0.74762 )
+
+[node name="Sprite" type="Sprite" parent="Camera"]
+texture = ExtResource( 3 )
+script = ExtResource( 2 )
+
+[node name="IPADD" type="LineEdit" parent="Camera"]
+margin_right = 381.0
+margin_bottom = 52.0
+rect_pivot_offset = Vector2( 1083.87, 187.302 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="Status" type="Label" parent="Camera/IPADD"]
+margin_left = 4.0
+margin_top = 56.0
+margin_right = 383.0
+margin_bottom = 149.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Count" type="Label" parent="Camera/IPADD"]
+margin_left = 3.0
+margin_top = 152.0
+margin_right = 376.0
+margin_bottom = 234.0
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 3 )
+
+[node name="MeshInstance" type="MeshInstance" parent="."]
+mesh = SubResource( 4 )
+material/0 = SubResource( 5 )
+
+[node name="GroundRay" type="RayCast" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, -0.734 )
+enabled = true

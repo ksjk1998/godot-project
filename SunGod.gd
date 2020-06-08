@@ -10,6 +10,7 @@ extends DirectionalLight
 func _ready():
 	pass # Replace with function body.
 
+# warning-ignore:unused_argument
 func _process(delta):
 	rotation.y += 0.01
 	rotation.z += 0.01
